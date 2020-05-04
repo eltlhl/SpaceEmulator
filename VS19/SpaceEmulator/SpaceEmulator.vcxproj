@@ -45,7 +45,9 @@
     <TargetName>$(ProjectName)_$(Configuration)_$(Platform)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)\..\bin\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir>$(SolutionDir)\..\bin\$(ProjectName)\</OutDir>
+    <IntDir>$(SolutionDir)\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
+    <TargetName>$(ProjectName)_$(Configuration)_$(Platform)</TargetName>
   </PropertyGroup>
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt_defaults.props')">
     <Import Project="$(QtMsBuild)\qt_defaults.props" />
@@ -75,14 +77,18 @@
       <SubSystem>Windows</SubSystem>
       <OutputFile>$(OutDir)\$(ProjectName)_$(Configuration)_$(Platform).exe</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ShowProgress>LinkVerboseLib</ShowProgress>
     </Link>
     <QtRcc>
       <QtRccFileName>qrc_%(Filename).cpp</QtRccFileName>
       <QtRccDir>$(IntDir)rcc\%(Dir)</QtRccDir>
     </QtRcc>
     <QtMoc>
-      <QtMocDir>$(IntDir)moc\%(RelativeDir)</QtMocDir>
+      <QtMocDir>$(IntDir)moc\%(Dir)</QtMocDir>
     </QtMoc>
+    <QtUic>
+      <QtUicDir>$(IntDir)uic\%(Dir)</QtUicDir>
+    </QtUic>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -95,9 +101,19 @@
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
+      <OutputFile>$(OutDir)\$(ProjectName)_$(Configuration)_$(Platform).exe</OutputFile>
       <GenerateDebugInformation>false</GenerateDebugInformation>
+      <ShowProgress>LinkVerboseLib</ShowProgress>
     </Link>
+    <QtRcc>
+      <QtRccDir>$(IntDir)rcc\%(Dir)</QtRccDir>
+    </QtRcc>
+    <QtMoc>
+      <QtMocDir>$(IntDir)moc\%(Dir)</QtMocDir>
+    </QtMoc>
+    <QtUic>
+      <QtUicDir>$(IntDir)uic\%(Dir)</QtUicDir>
+    </QtUic>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\SpaceEmulator\fly_obj.cpp" />

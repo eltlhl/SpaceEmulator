@@ -13,6 +13,18 @@
     <height>316</height>
    </rect>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>303</width>
+    <height>316</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>303</width>
+    <height>316</height>
+   </size>
+  </property>
   <property name="windowTitle">
    <string>Input parameters</string>
   </property>

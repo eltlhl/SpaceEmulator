@@ -112,11 +112,19 @@ void space_emulator::make_bckg(const size_t stars_num)
 void space_emulator::load_config(const std::filesystem::path& path)
 {
 	if (!std::filesystem::exists(path))
+	{
 		show_error_and_exit("Config file does not exist.\nExiting...");
+
+		return;
+	}
 
 	std::ifstream input(path);
 	if (!input.is_open())
+	{
 		show_error_and_exit("Could not open config file.\nExiting...");
+
+		return;
+	}
 	
 	std::string dummy;
 	std::getline(input, dummy);

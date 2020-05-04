@@ -37,3 +37,7 @@ VS19/SpaceEmulator/x64
 VS19/SpaceEmulator/x86
 
 *.user
+
+VS19/SpaceEmulator/SpaceEmulator/x64/Debug/qmake/
+
+VS19/SpaceEmulator/SpaceEmulator/x64/Release/qmake/
