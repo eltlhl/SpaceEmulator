@@ -35,3 +35,5 @@
 bin/
 VS19/SpaceEmulator/x64
 VS19/SpaceEmulator/x86
+
+*.user
