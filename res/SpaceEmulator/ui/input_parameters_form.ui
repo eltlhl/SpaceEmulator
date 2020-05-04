@@ -14,7 +14,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>input_parameters_form</string>
+   <string>Input parameters</string>
   </property>
   <widget class="QPushButton" name="start_button">
    <property name="geometry">
