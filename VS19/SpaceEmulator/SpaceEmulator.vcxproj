@@ -39,6 +39,14 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)\..\bin\$(ProjectName)\</OutDir>
+    <IntDir>$(SolutionDir)\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
+    <TargetName>$(ProjectName)_$(Configuration)_$(Platform)</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)\..\bin\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt_defaults.props')">
     <Import Project="$(QtMsBuild)\qt_defaults.props" />
   </ImportGroup>
@@ -65,9 +73,16 @@
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
+      <OutputFile>$(OutDir)\$(ProjectName)_$(Configuration)_$(Platform).exe</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <QtRcc>
+      <QtRccFileName>qrc_%(Filename).cpp</QtRccFileName>
+      <QtRccDir>$(IntDir)rcc\%(Dir)</QtRccDir>
+    </QtRcc>
+    <QtMoc>
+      <QtMocDir>$(IntDir)moc\%(RelativeDir)</QtMocDir>
+    </QtMoc>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -85,28 +100,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="fly_obj.cpp" />
-    <ClCompile Include="input_parameters_form.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="space_emulator.cpp" />
+    <ClCompile Include="..\..\src\SpaceEmulator\fly_obj.cpp" />
+    <ClCompile Include="..\..\src\SpaceEmulator\input_parameters_form.cpp" />
+    <ClCompile Include="..\..\src\SpaceEmulator\main.cpp" />
+    <ClCompile Include="..\..\src\SpaceEmulator\space_emulator.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="space_emulator.hpp" />
+    <QtUic Include="..\..\res\SpaceEmulator\ui\input_parameters_form.ui" />
+    <QtUic Include="..\..\res\SpaceEmulator\ui\space_emulator.ui" />
   </ItemGroup>
   <ItemGroup>
-    <QtUic Include="input_parameters_form.ui" />
-    <QtUic Include="space_emulator.ui" />
+    <None Include="..\..\cfg\solar_system.cfg" />
   </ItemGroup>
   <ItemGroup>
-    <QtRcc Include="space_emulator.qrc" />
+    <QtRcc Include="..\..\res\SpaceEmulator\space_emulator.qrc" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="fly_obj.hpp" />
-    <QtMoc Include="input_parameters_form.hpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="params.cfg" />
-    <None Include="params.md" />
+    <ClInclude Include="..\..\src\SpaceEmulator\fly_obj.hpp" />
+    <QtMoc Include="..\..\src\SpaceEmulator\space_emulator.hpp" />
+    <QtMoc Include="..\..\src\SpaceEmulator\input_parameters_form.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

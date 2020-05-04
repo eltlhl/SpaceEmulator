@@ -73,6 +73,30 @@ void space_emulator::update()
 	}
 }
 
+void space_emulator::show_error_and_exit(const std::string_view msg)
+{
+	QMessageBox _(QMessageBox::Icon::Critical,
+		"Warning",
+		msg.data(),
+		QMessageBox::StandardButton::Ok,
+		this);
+
+	_.exec();
+
+	close();
+}
+
+void space_emulator::show_warning(const std::string_view msg)
+{
+	QMessageBox _(QMessageBox::Icon::Warning,
+		"Warning",
+		msg.data(),
+		QMessageBox::StandardButton::Ok,
+		this);
+
+	_.exec();
+}
+
 void space_emulator::make_bckg(const size_t stars_num)
 {
 	QPainter painter(m_bckg);
@@ -87,8 +111,13 @@ void space_emulator::make_bckg(const size_t stars_num)
 
 void space_emulator::load_config(const std::filesystem::path& path)
 {
-	std::ifstream input(path);
+	if (!std::filesystem::exists(path))
+		show_error_and_exit("Config file does not exist.\nExiting...");
 
+	std::ifstream input(path);
+	if (!input.is_open())
+		show_error_and_exit("Could not open config file.\nExiting...");
+	
 	std::string dummy;
 	std::getline(input, dummy);
 
@@ -105,25 +134,23 @@ void space_emulator::load_config(const std::filesystem::path& path)
 
 	if (auto it = std::find_if(std::begin(m_objects), std::end(m_objects), [](const auto& x) { return x.get_name() == "Earth"; }); it != std::end(m_objects))
 	{
-		input_parameters_form in(this);
+		auto&& [mass, r, orbit] = get_input_parameters();
 
-		in.show();
+		it->set_mass(mass);
+		it->set_r(r);
+		it->set_orbit(offset_x - orbit);
 	}
 	else
-	{
-		QMessageBox _(QMessageBox::Icon::Warning,
-			"Warning",
-			"Could not find an object named \"Earth\".\nLoading default values.",
-			QMessageBox::StandardButton::Ok,
-			this);
-		
-		_.exec();
-	}
+		show_warning("Could not find an object named \"Earth\".\nLoading default values.");
 }
 
 std::tuple<double, double, double> space_emulator::get_input_parameters()
 {
-	return { 1, 7, 150 };
+	input_parameters_form dialog(this);
+
+	dialog.exec();
+
+	return dialog.get_values();
 }
 
 space_emulator::space_emulator(const bool fullscreen) :
@@ -153,10 +180,11 @@ space_emulator::space_emulator(const bool fullscreen) :
 	m_timer = new QTimer(this);
 	connect(m_timer, SIGNAL(timeout()), this, SLOT(update()));
 
-	load_config("params.cfg");
+	auto path = CONFIG_DIR;
+	load_config(path += "solar_system.cfg");
 }
 
-space_emulator::~space_emulator()
+space_emulator::~space_emulator() noexcept
 {
 	delete m_timer;
 	delete m_bckg;
@@ -181,7 +209,7 @@ void space_emulator::showEvent(QShowEvent* event)
 void space_emulator::keyPressEvent(QKeyEvent* event)
 {
 	if (event->key() == Qt::Key_Escape)
-		this->close();
+		close();
 
 	QMainWindow::keyPressEvent(event);
 }

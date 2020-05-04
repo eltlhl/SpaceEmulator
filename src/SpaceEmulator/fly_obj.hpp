@@ -76,6 +76,8 @@ public:
 
 	__forceinline void set_color(QColor color) noexcept { m_color = color; m_item->setBrush(m_color); }
 
+	__forceinline void set_orbit(const double orbit) noexcept { m_x = orbit; } // TODO: rename the function
+
 	[[nodiscard]]
 	std::string_view get_name() const noexcept { return m_name; }
 

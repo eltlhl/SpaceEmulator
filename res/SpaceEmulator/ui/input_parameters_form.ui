@@ -2,6 +2,9 @@
 <ui version="4.0">
  <class>input_parameters_form</class>
  <widget class="QWidget" name="input_parameters_form">
+  <property name="windowModality">
+   <enum>Qt::ApplicationModal</enum>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -72,7 +75,7 @@
     <string>Mass</string>
    </property>
   </widget>
-  <widget class="QSlider" name="horizontalSlider_3">
+  <widget class="QSlider" name="orbit_slider">
    <property name="geometry">
     <rect>
      <x>20</x>

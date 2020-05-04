@@ -18,6 +18,8 @@ constexpr auto LOG_HEIGHT = 360;
 constexpr auto LABEL_HEIGHT = 30;
 constexpr auto SLIDER_HEIGHT = 30;
 
+const std::filesystem::path CONFIG_DIR{ "../../cfg/" };
+
 class space_emulator : public QMainWindow
 {
 	Q_OBJECT
@@ -26,13 +28,17 @@ private slots:
 	void update();
 
 private:
+	// [[noreturn]]
+	void show_error_and_exit(const std::string_view msg) /* const */;
+	void show_warning(const std::string_view msg) /* const */;
+
 	void make_bckg(const size_t stars_num = STARS_NUM);
 	void load_config(const std::filesystem::path& path);
 	std::tuple<double, double, double> get_input_parameters();
 
 public:
 	space_emulator(const bool fullscreen);
-	~space_emulator();
+	~space_emulator() noexcept;
 
 	void showEvent(QShowEvent* event) override;
 	void keyPressEvent(QKeyEvent* event) override;

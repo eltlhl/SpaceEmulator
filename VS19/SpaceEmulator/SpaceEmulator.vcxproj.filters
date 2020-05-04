@@ -23,53 +23,53 @@
       <Extensions>qrc;*</Extensions>
       <ParseFiles>false</ParseFiles>
     </Filter>
+    <Filter Include="Configs">
+      <UniqueIdentifier>{932680f9-ebf8-4ac9-b217-a6f0b1b1aec1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="..\..\src\SpaceEmulator\space_emulator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="fly_obj.cpp">
+    <ClCompile Include="..\..\src\SpaceEmulator\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="input_parameters_form.cpp">
+    <ClCompile Include="..\..\src\SpaceEmulator\fly_obj.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="space_emulator.cpp">
+    <ClCompile Include="..\..\src\SpaceEmulator\input_parameters_form.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <QtUic Include="input_parameters_form.ui">
+    <QtUic Include="..\..\res\SpaceEmulator\ui\input_parameters_form.ui">
       <Filter>Form Files</Filter>
     </QtUic>
-    <QtUic Include="space_emulator.ui">
+    <QtUic Include="..\..\res\SpaceEmulator\ui\space_emulator.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="fly_obj.hpp">
+    <None Include="..\..\cfg\solar_system.cfg">
+      <Filter>Configs</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <QtRcc Include="..\..\res\SpaceEmulator\space_emulator.qrc">
+      <Filter>Resource Files</Filter>
+    </QtRcc>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\SpaceEmulator\fly_obj.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="params.md">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="params.cfg">
-      <Filter>Resource Files</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <QtMoc Include="input_parameters_form.hpp">
+    <QtMoc Include="..\..\src\SpaceEmulator\space_emulator.hpp">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="space_emulator.hpp">
+    <QtMoc Include="..\..\src\SpaceEmulator\input_parameters_form.hpp">
       <Filter>Header Files</Filter>
     </QtMoc>
-  </ItemGroup>
-  <ItemGroup>
-    <QtRcc Include="space_emulator.qrc">
-      <Filter>Resource Files</Filter>
-    </QtRcc>
   </ItemGroup>
 </Project>

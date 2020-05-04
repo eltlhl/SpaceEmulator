@@ -1,4 +1,5 @@
 #include "space_emulator.hpp"
+#include "input_parameters_form.hpp"
 
 #include <QtWidgets/QApplication>
 

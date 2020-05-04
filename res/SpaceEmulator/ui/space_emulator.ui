@@ -163,7 +163,7 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="solar_system.qrc"/>
+  <include location="../space_emulator.qrc"/>
  </resources>
  <connections/>
 </ui>
