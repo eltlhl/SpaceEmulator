@@ -17,55 +17,60 @@ void space_emulator::update()
 	for (size_t i{}; i < m_steps; ++i)
 	{
 		std::string_view collapsed1,
-						 collapsed2,
-						 out_of;
+			 collapsed2,
+		 out_of;
 		for (auto&& obj1 : m_objects)
 		{
-			for (auto&& obj2 : m_objects)
-				if (obj1.get_name() != obj2.get_name())
-				{
-					if (auto dist = obj1.dist(obj2); dist <= obj1.get_r() + obj2.get_r())
+	for (auto&& obj2 : m_objects)
+	if (obj1.get_name() 
+	 != obj2.get_name())
+		{
+	if (auto dist 
+	 = obj1.dist(obj2);
+	dist <= obj1.get_r() + obj2.get_r())
 					{
-						collapsed1 = obj1.get_name();
-						collapsed2 = obj2.get_name();
+	collapsed1 = obj1.get_name();
+	ollapsed2 = obj2.get_name();
 					}
-					else
-						obj1.accel2(obj2);
+			else
+	obj1.accel2(obj2);
 				}
-
-			if (obj1.get_name() != "Sun" && obj1.dist(m_objects[0]) > MAX_DIST)
-				out_of = obj1.get_name();
+if (obj1.get_name() != "Sun" && 
+    obj1.dist(m_objects[0]) > MAX_DIST)
+	out_of = obj1.get_name();
 		}
 
-		if (!collapsed1.empty())
+	if (!collapsed1.empty())
 		{
-			m_status += std::string("COLLAPSED (") + collapsed1.data() + "+" + collapsed2.data() + ")\n";
+	m_status += std::string("COLLAPSED (") + collapsed1.data() 
+		+ "+" + collapsed2.data() + ")\n";
 			m_ui.log->setText(m_status.data());
 
-			size_t i = -1, j = -1;
-			for (size_t k{}; k < m_objects.size(); ++k)
-				if (i != -1 && j != -1)
+size_t i = -1, j = -1;
+for (size_t k{}; k < m_objects.size(); ++k)
+		if (i != -1 && j != -1)
 					break;
-				else if (m_objects[k].get_name() == collapsed1)
+else if (m_objects[k].get_name() == collapsed1)
 					i = k;
-				else if (m_objects[k].get_name() == collapsed2)
+	else if (m_objects[k].get_name() == collapsed2)
 					j = k;
 
-			m_scene->removeItem(m_objects[i].get_gitem());
-			m_scene->removeItem(m_objects[j].get_gitem());
+	m_scene->removeItem(m_objects[i].get_gitem());
+	m_scene->removeItem(m_objects[j].get_gitem());
+		m_objects[i] = fly_obj::join(m_objects[i], m_objects[j]);
+		m_scene->addItem(m_objects[i].get_gitem()); 
 			
-			m_objects[i] = fly_obj::join(m_objects[i], m_objects[j]);
-			m_scene->addItem(m_objects[i].get_gitem()); 
-			
-			m_objects.erase(std::begin(m_objects) + j);
+	m_objects.erase(std::begin(m_objects) + j);
 		}
 
 		if (!out_of.empty())
 		{
-			m_status += std::string("OUT OF RANGE(") + out_of.data() + ")\n";
-			m_ui.log->setText(m_status.data());
+	m_status += std::string("OUT OF RANGE(") + out_of.data() + ")\n";
+	m_ui.log->setText(m_status.data());
 
-			m_objects.erase(std::find_if(std::begin(m_objects), std::end(m_objects), [&](const auto& x) { return x.get_name() == out_of; }));
+m_objects.erase(std::find_if(std::begin(m_objects), 
+			     std::end(m_objects), [&](const auto& x) 
+			     { return x.get_name() == out_of; }));
 		}
 
 		for (auto&& obj : m_objects)
@@ -106,7 +111,8 @@ void space_emulator::make_bckg(const size_t stars_num)
 
 	painter.setPen(Qt::white);
 	for (size_t i{}; i < stars_num; ++i)
-		painter.drawPoint(rand() % m_ui.canvas->width(), rand() % m_ui.canvas->height());
+		painter.drawPoint(rand() % m_ui.canvas->width(), rand()
+				  % m_ui.canvas->height());
 }
 
 void space_emulator::load_config(const std::filesystem::path& path)
@@ -117,6 +123,7 @@ void space_emulator::load_config(const std::filesystem::path& path)
 
 		return;
 	}
+
 
 	std::ifstream input(path);
 	if (!input.is_open())
@@ -140,7 +147,9 @@ void space_emulator::load_config(const std::filesystem::path& path)
 
 	input.close();
 
-	if (auto it = std::find_if(std::begin(m_objects), std::end(m_objects), [](const auto& x) { return x.get_name() == "Earth"; }); it != std::end(m_objects))
+	if (auto it = std::find_if(std::begin(m_objects), std::end(m_objects), 
+				   
+	[](const auto& x) { return x.get_name() == "Earth"; }); it != std::end(m_objects))
 	{
 		auto&& [mass, r, orbit] = get_input_parameters();
 
@@ -149,7 +158,8 @@ void space_emulator::load_config(const std::filesystem::path& path)
 		it->set_orbit(offset_x - orbit);
 	}
 	else
-		show_warning("Could not find an object named \"Earth\".\nLoading default values.");
+		show_warning("Could not find an object named 
+			     \"Earth\".\nLoading default values.");
 }
 
 std::tuple<double, double, double> space_emulator::get_input_parameters()
@@ -176,13 +186,16 @@ space_emulator::space_emulator(const bool fullscreen) :
 	if (fullscreen)
 		setWindowState(Qt::WindowFullScreen);
 
-	connect(m_ui.steps_slider, &QSlider::valueChanged, [this]() noexcept { m_steps = m_ui.steps_slider->value(); });
-	connect(m_ui.precision_slider, &QSlider::valueChanged, [this]() noexcept { m_precision = 1. / m_ui.precision_slider->value(); });
+	connect(m_ui.steps_slider, &QSlider::valueChanged, 
+	[this]() noexcept { m_steps = m_ui.steps_slider->value(); });
+	connect(m_ui.precision_slider, &QSlider::valueChanged,
+[this]() noexcept { m_precision = 1. / m_ui.precision_slider->value(); });
 
 	m_scene = new QGraphicsScene(m_ui.canvas);
 	m_ui.canvas->setRenderHint(QPainter::Antialiasing);
 
-	m_bckg = new QImage(m_ui.canvas->width(), m_ui.canvas->height(), QImage::Format_RGB16);
+	m_bckg = new QImage(m_ui.canvas->width(),
+m_ui.canvas->height(), QImage::Format_RGB16);
 	make_bckg();
 
 	m_timer = new QTimer(this);
